@@ -52,7 +52,7 @@ namespace Childcare_System_1
                 "Caregiver #1 Phone: " + caregiverOnePhone + "\n" +
                 "Caregiver #2 Name: " + caregiverTwoName + "\n" +
                 "Caregiver #2 Phone: " + caregiverTwoPhone + "\n", "Check over this information", MessageBoxButtons.OKCancel);
-
+/*
             switch (result)
             {
                 case DialogResult.OK:
@@ -73,7 +73,7 @@ namespace Childcare_System_1
                     }
             }
 
-       
+       */
             MySqlConnection connection2 = new MySqlConnection("Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Password=" + password + ";");
 
             Console.WriteLine("We got here 1");

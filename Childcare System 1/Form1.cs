@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -90,6 +89,90 @@ namespace Childcare_System_1
 
         public void search()
         {
+            MySqlConnection connection2 = new MySqlConnection("Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Password=" + password + ";");
+
+           
+                connection2.Open();
+                string query = @"SELECT DISTINCT name2 FROM childDatabase WHERE name2 Like '%" + childSearch.Text + "%'";
+                   // string query = "SELECT name2 FROM childDatabase WHERE name2 = @idParam";
+                     MySqlCommand cmd = new MySqlCommand(query, connection2);
+
+                    cmd.ExecuteNonQuery();
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, connection2);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+
+
+                    childSearchCombo.DataSource = dt;
+                    childSearchCombo.ValueMember = dt.Columns[0].ColumnName;
+                    connection2.Close();
+
+                    System.Console.WriteLine(dt.Rows[0][0] + "");
+                    connection2.Close();
+
+
+                    System.Console.WriteLine();
+                   // cmd.Parameters.Add("@idParam", SqlDbType.Int).Value = 1; //your id parameter!
+                    //cmd.Connection = sqlConn;
+
+            /*
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            System.Console.WriteLine("We get here?");
+                            firstNameDisp.Text = (string)reader[0];
+                            //textBox2.Text = (string)reader[1];
+                        }
+                    }
+             * 
+             * 
+             * 
+             * */
+
+
+
+                    connection2.Close();
+                    MessageBox.Show("Successfully added into the database!");
+
+       
+                
+        /*
+            using (MySqlConnection sqlConn = new MySqlConnection("Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Password=" + password + ";");
+            {
+                using (MySqlCommand cmd = new MySqlCommand())
+                {
+                    cmd.CommandText = @"SELECT name2 FROM childDatabase WHERE Employee_ID = @idParam";
+                    cmd.Parameters.Add("@idParam", SqlDbType.Int).Value = 1; //your id parameter!
+                    cmd.Connection = sqlConn;
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            textBox1.Text = (string)reader[0];
+                            //textBox2.Text = (string)reader[1];
+                        }
+                    }
+                }
+            }
+
+
+
+       
+    
+
+
+
+
+
+
+
+
+
+
+
             string nameSearching = childSearch.Text;
            
             int counter = 0;
@@ -121,27 +204,29 @@ namespace Childcare_System_1
 
             // Suspend the screen.
             Console.ReadLine();
+ }
+         * */
         }
-        /*
+        
         private void addChildBtn_Click(object sender, EventArgs e)
         {
-
-          
+            
+          /*
           //  string lastName = lastNameAdd.Text;
 
-            string firstName = firstNameAdd.Text;
-            int ageComboIndex = ageComboAdd.SelectedIndex;
-            string age = this.ageComboAdd.Items[ageComboIndex].ToString();
+            string firstName = firstNameDisp.Text;
+            int ageComboIndex = ageDisp.SelectedIndex;
+            string age = this.ageDisp.Items[ageComboIndex].ToString();
 
-            int genderComboIndex = genderComboAdd.SelectedIndex;
-            string gender = this.genderComboAdd.Items[genderComboIndex].ToString();
+            int genderComboIndex = genderDisp.SelectedIndex;
+            string gender = this.genderDisp.Items[genderComboIndex].ToString();
 
-            string address = addressAdd.Text;
+            string address = addressDisp.Text;
 
-            string caregiverOneName = caregiver1NameAdd.Text;
-            string caregiverOnePhone = caregiver1PhoneAdd.Text;
-            string caregiverTwoName = caregiver2NameAdd.Text;
-            string caregiverTwoPhone = caregiver2PhoneAdd.Text;
+            string caregiverOneName = caregiver1NameDisp.Text;
+            string caregiverOnePhone = caregiver1PhoneDisp.Text;
+            string caregiverTwoName = caregiver2NameDisp.Text;
+            string caregiverTwoPhone = caregiver2PhoneDisp.Text;
 
             DialogResult result = MessageBox.Show("Please ensure the following information is correct:\n" +
                 "Name: " + firstName + "\n" +
@@ -253,10 +338,9 @@ namespace Childcare_System_1
 
             }
         
-         
+         */
         }
 
-        */
 
         private void childSearchBtn_Click(object sender, EventArgs e)
         {
@@ -265,7 +349,26 @@ namespace Childcare_System_1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            firstNameDisp.Text = name;
+            MySqlConnection connection2 = new MySqlConnection("Server=" + server + ";" + "Port=" + port + ";" + "Database=" + database + ";" + "Uid=" + uid + ";" + "Password=" + password + ";");
+
+            connection2.Open();
+            string query = @"SELECT DISTINCT name2, age, gender FROM childDatabase";
+            MySqlCommand cmd = new MySqlCommand(query, connection2);
+
+            cmd.ExecuteNonQuery();
+
+            MySqlDataAdapter da = new MySqlDataAdapter(query, connection2);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+          
+            firstNameDisp.Text = dt.Columns[0].ColumnName;
+            ageDisp.Text = dt.Columns[1].ColumnName;
+            genderDisp.Text = dt.Columns[2].ColumnName;
+      
+            System.Console.WriteLine(dt.Rows[0][0] + "");
+            connection2.Close();
+
         }
 
 
